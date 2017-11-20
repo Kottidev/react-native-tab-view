@@ -14,6 +14,12 @@ import { TabViewAnimated, TabViewPagerPan } from 'react-native-tab-view';
 
 import type { NavigationState } from 'react-native-tab-view/types';
 
+type Route = {
+  key: string,
+};
+
+type State = NavigationState<Route>;
+
 const ALBUMS = {
   'Abbey Road': require('../assets/album-art-1.jpg'),
   'Bat Out of Hell': require('../assets/album-art-2.jpg'),
@@ -30,17 +36,11 @@ const initialLayout = {
   width: Dimensions.get('window').width,
 };
 
-type Route = {
-  key: string,
-};
-
-type State = NavigationState<Route>;
-
 export default class CoverflowExample extends PureComponent<*, State> {
   static title = 'Coverflow';
   static appbarElevation = 0;
 
-  state: State = {
+  state = {
     index: 2,
     routes: Object.keys(ALBUMS).map(key => ({ key })),
   };
