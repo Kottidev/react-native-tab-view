@@ -69,10 +69,9 @@ export default class TabBar<T: Route<*>> extends React.PureComponent<
     renderLabel: PropTypes.func,
     renderIndicator: PropTypes.func,
     onTabPress: PropTypes.func,
-    labelStyle: Text.any,
-    focusedLabelStyle: Text.any,
+    labelStyle: PropTypes.any,
+    focusedLabelStyle: PropTypes.any,
     focusedTabContainerStyle: PropTypes.any,
-
     style: PropTypes.any,
   };
 
