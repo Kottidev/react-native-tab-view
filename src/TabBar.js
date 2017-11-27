@@ -44,8 +44,7 @@ type Props<T> = SceneRendererProps<T> & {
   tabStyle?: Style,
   indicatorStyle?: Style,
   labelStyle?: Style,
-  focusedLabelStyle?: Style,
-  focusedTabContainerStyle?: Style,
+  focusedtabStyle?: Style,
   style?: Style,
 };
 
@@ -70,8 +69,7 @@ export default class TabBar<T: Route<*>> extends React.PureComponent<
     renderIndicator: PropTypes.func,
     onTabPress: PropTypes.func,
     labelStyle: PropTypes.any,
-    focusedLabelStyle: PropTypes.any,
-    focusedTabContainerStyle: PropTypes.any,
+    focusedtabStyle: PropTypes.any,
     style: PropTypes.any,
   };
 
@@ -149,12 +147,7 @@ export default class TabBar<T: Route<*>> extends React.PureComponent<
       return null;
     }
     return (
-
-      <Animated.Text style={[
-        styles.tabLabel,
-        this.props.labelStyle,
-        scene.focused ? this.props.focusedLabelStyle : null,
-      ]}>
+      <Animated.Text style={[styles.tabLabel, this.props.labelStyle]}>
         {label}
       </Animated.Text>
     );
@@ -329,6 +322,10 @@ export default class TabBar<T: Route<*>> extends React.PureComponent<
     this._isManualScroll = false;
   };
 
+  _needsRTLAdaptations() {
+    return I18nManager.isRTL && Platform.OS === 'android';
+  }
+
   _setRef = (el: ?ScrollView) => (this._scrollView = el);
 
   render() {
@@ -386,6 +383,11 @@ export default class TabBar<T: Route<*>> extends React.PureComponent<
             contentContainerStyle={[
               styles.tabContent,
               scrollEnabled ? null : styles.container,
+              {
+                flexDirection: this._needsRTLAdaptations()
+                  ? 'row-reverse'
+                  : 'row'
+              }
             ]}
             scrollEventThrottle={16}
             onScroll={this._handleScroll}
@@ -471,10 +473,7 @@ export default class TabBar<T: Route<*>> extends React.PureComponent<
                       onTabPress(scene);
                     }
                   }}
-                  style={[
-                    tabContainerStyle,
-                    focused ? this.props.focusedTabContainerStyle: null,
-                  ]}
+                  style={[tabContainerStyle, focused ? focusedtabStyle : {}]}
                 >
                   <View pointerEvents="none" style={styles.container}>
                     <Animated.View
