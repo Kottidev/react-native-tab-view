@@ -473,7 +473,7 @@ export default class TabBar<T: Route<*>> extends React.PureComponent<
                       onTabPress(scene);
                     }
                   }}
-                  style={[tabContainerStyle, focused ? focusedtabStyle : {}]}
+                  style={[tabContainerStyle, focused ? this.props.focusedtabStyle : {}]}
                 >
                   <View pointerEvents="none" style={styles.container}>
                     <Animated.View
